@@ -206,8 +206,246 @@ tsc --init
   * protected: 保护类型  类内部，子类可访问
   * private: 私有属性    类内部可访问
 
-* 1
+* 类的静态属性
 
-* 
-
+  ```
+  class StaticClass {
+    static prop = 'props'
+    name:string;
+    constructor(name:string){
+      this.name = name
+    }
   
+    static run(){
+      console.log(this.prop);
+      //console.log(this.name); // 报错，静态方法不能直接调用构造函数属性
+    }
+  }
+  StaticClass.prop
+  ```
+
+* 多态：父类定义一个方法不去实现，让继承它的子类去实现，每一个子类有不同的表现
+
+  ```js
+  class Animal{
+    name:string;
+    constructor(name:string){
+      this.name = name
+    }
+    // 父类方法
+    eat(){
+      console.log('父类方法');
+      
+    }
+  }
+  
+  class Dog extends Animal{
+    constructor(name:string){
+      super(name)
+    }
+    // 子类1方法
+    eat(){
+      console.log('Dog - 子类方法');
+      
+    }
+  }
+  
+  class Cat extends Animal{
+    constructor(name:string){
+      super(name)
+    }
+    // 子类2方法
+    eat(){
+      console.log('Cat - 子类方法');
+      
+    }
+  }
+  ```
+
+* abstract抽象类
+
+  * 它是提供其他类继承的基类，不能直接使用
+  * 用abstract关键字定义的抽象类和抽象方法，抽象类中的抽象方法不包含具体实现，必须在派生类中实现
+  * 抽象类和抽象方法用来定义标准
+
+  ```js
+  abstract class Animal {
+    name:string;
+    constructor(name:string){
+      this.name = name
+    }
+    abstract eat():void; // 抽象方法不能具有具体实现， 抽象方法只能出现在抽象类里
+  }
+  
+  class Dog extends Animal{
+    constructor(name:string){
+      super(name)
+    }
+    eat(){
+      console.log('Dog - eat方法'); // 子类必须有所继承抽象类中的抽象方法
+      
+    }
+  }
+  
+  ```
+
+## Ts接口
+
+> 接口的作用：制定标准，起到限制规范的作用。ts中的接口类型包括属性，函数，可索引和类等
+
+1. 属性接口：对json的约束
+
+   ```js
+   // 1.定义属性接口
+   interface FullName{
+     firstName:string; // 必须以分号结束
+     secondName？:string; // 可选属性
+   }
+   
+   // 2.使用属性接口
+   function printName(name:FullName){
+     // name参数对象必须包含接口中定义的属性
+     console.log(name.firstName + name.secondName);
+     
+   }
+   
+   // 3.参数约束
+   var nameObj = {
+     firstName: 'zs',
+     secondName: 'ls',
+     age: 20 // 对象形式可包含多个参数, 但不建议。需严格按照接口定义参数
+   }
+   printName(nameObj);
+   ```
+
+2. 函数接口 ：对方法的参数和返回值进行约束
+
+   ```
+   // 1.定义函数接口
+   interface encodeValue{
+     (key:string, value:string):string;
+   }
+   
+   // 2.使用函数接口
+   var printValue:encodeValue = function(key:string, value:string):string{
+     return key + value
+   }
+   
+   // 3. 函数约束
+   printValue('zs', 'ls')
+   ```
+
+3. 可索引接口：对数组，对象的约束（不常用）
+
+   ```
+   // 对数组的约束
+   interface arrInter{
+     [index:number]:string;
+   }
+   
+   var arr:arrInter = ['zs', 'ls']
+   
+   // 对对象的约束
+   interface ObjectInter{
+     [index:string]:string;
+   }
+   
+   var obj:ObjectInter = {
+     key: 'key',
+     value: 'value'
+   }
+   ```
+
+4. 类类型接口 ：对类的约束 和 抽象类有点相似
+
+   ```
+   // 类接口定义
+   interface Parent{
+     name:string;
+     action(str:string):void;
+   }
+   // 类接口使用
+   class Child implements Parent{
+     name:string;
+     constructor(name:string){
+       this.name = name
+     }
+   
+     action(str:string):void{
+       console.log(str);
+       
+     }
+   }
+   ```
+
+5. 接口的扩展：接口可以继承接口
+
+   ```
+   interface Animal{
+     eat():void;
+   }
+   
+   interface Person extends Animal{
+     work():void;
+   }
+   
+   class Chinese implements Person{
+     eat() {
+       console.log('eat');
+       
+     }
+   
+     work() {
+       console.log('work');
+       
+     }
+   }
+   ```
+
+## Ts泛型
+
+> 泛型就是解决类，接口，方法的复用性。以及对不特定数据类型的支持
+
+1. 泛型函数
+
+   ```
+   function getData<T>(value:T):T{
+     return value
+   }
+   
+   getData<number>(123);
+   getData<string>('str')
+   ```
+
+2. 泛型类
+
+   ```
+   class MinNum<T>{
+     list:T[] = []
+   
+     add(num:T):void{
+       this.list.push(num)
+     }
+   }
+   
+   var min = new MinNum<number>()
+   min.add(1)
+   ```
+
+3. 泛型接口
+
+   ```
+   interface Config{
+     <T>(value:T):T;
+   }
+   
+   var fn:Config = function<T>(val:T):T {
+     return val
+   }
+   
+   fn<string>('zs')
+   ```
+
+   
+
+4. 
