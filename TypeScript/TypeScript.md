@@ -12,6 +12,24 @@ npm i -g typescript
 tsc tscript.ts
 ```
 
+### --outDir 制定编译输出文件夹
+
+```
+tsc --outDir ./dist tscript.ts
+```
+
+### --target 制定编译版本
+
+```
+tsc --outDir ./dist --target  es5 tscript.ts
+```
+
+### --watch 自动编译
+
+```
+tsc --watch tscript.ts
+```
+
 ## VSCode配置ts自动编译
 
 ```
@@ -448,4 +466,3 @@ tsc --init
 
    
 
-4. 
