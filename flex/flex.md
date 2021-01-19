@@ -2,6 +2,15 @@
 
 
 
+* 遗忘点
+  * flex-flow:  flex-direction  flex-wrap; 
+  * flex : flex-grow  flex-shrink  flex-basis;
+    * 放大比率   默认0（不放大）
+    * 缩小比率  默认 1（等比缩小）
+    * 基础尺寸  默认 auto
+
+
+
 ## display：flex
 
 * 父盒子定义
