@@ -71,6 +71,35 @@ vue学习总结
 
 #### 实现数据响应
 
+### $nextTick原理
+
+* MutationObserver
+
+* MO是HTML5中的API，是一个用于监视DOM变动的接口，它可以监听一个DOM对象上发生的子节点删除、属性修改、文本内容修改等。
+
+```
+// Firefox和Chrome早期版本中带有前缀
+var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
+// 选择目标节点
+var target = document.querySelector('#some-id'); 
+// 创建观察者对象
+var observer = new MutationObserver(function(mutations) {  
+  mutations.forEach(function(mutation) { 
+    console.log(mutation.type); 
+  }); 
+}); 
+// 配置观察选项:
+var config = { attributes: true, childList: true, characterData: true } 
+// 传入目标节点和观察选项
+observer.observe(target, config); 
+// 随后,你还可以停止观察
+observer.disconnect();
+```
+
+
+
+
+
 ### 虚拟dom
 
 Virtual DOM就是用JavaScript对象来描述dom结构，数据修改的时候，我们先修改虚拟dom中的 数据，然后数组做diff，最后汇总所有的diff，力求做最少的dom操作，毕竟js里对比很快，而真实dom操作太慢

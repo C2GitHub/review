@@ -19,6 +19,7 @@ axios.interceptors.request.use((config) => {
                 // config.params.access_token = token; // 在params中加token
 
                 config.headers = {
+                    withCredentials: true,
                     Authorization: `Bearer ${token}`, // 在header中加token
                 };
             }
