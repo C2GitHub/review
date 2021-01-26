@@ -56,6 +56,30 @@ git config --list
 git config user.name
 ```
 
+### 乱码
+
+#### git status 显示乱码
+
+```bash
+git config --global core.quotepath false
+```
+
+### 修改默认编辑器
+
+```bash
+git config core.editor notepad
+
+# 添加 vscode 编辑器 - mac
+# 通过 vim 打开环境变量配置文件
+vim ~/.bash_profile
+# 添加环境变量
+export PATH=/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin:$PATH
+# 保存退出
+source ~/.bash_profile
+# 测试：在终端中直接通过命令 code 调用 vscode
+git config --global core.editor "code --wait"
+```
+
 # Git命令
 
 ### 添加操作 git add
